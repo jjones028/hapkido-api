@@ -1,4 +1,4 @@
-package io.spektacle.tables
+package io.spektacle.db.tables
 
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.Table

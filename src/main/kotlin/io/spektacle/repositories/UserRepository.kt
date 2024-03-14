@@ -1,8 +1,8 @@
 package io.spektacle.repositories
 
 import io.spektacle.models.User
-import io.spektacle.singletons.DatabaseSingleton.dbQuery
-import io.spektacle.tables.Users
+import io.spektacle.db.DatabaseSingleton.dbQuery
+import io.spektacle.db.tables.Users
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 

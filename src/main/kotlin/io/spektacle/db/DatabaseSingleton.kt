@@ -1,9 +1,9 @@
-package io.spektacle.singletons
+package io.spektacle.db
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.config.*
-import io.spektacle.tables.Users
+import io.spektacle.db.tables.Users
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
