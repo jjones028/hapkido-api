@@ -9,5 +9,8 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello World!")
         }
+        get("/json") {
+            call.respond(mapOf("hello" to "world"))
+        }
     }
 }
