@@ -8,6 +8,8 @@ import io.spektacle.models.User
 import io.spektacle.repositories.UserRepository
 
 fun Routing.userRoutes() {
+
+    //TODO: Introduce some sort of dependency injection here.
     val repository = UserRepository()
 
     route("/user") {
