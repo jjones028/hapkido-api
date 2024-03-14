@@ -18,7 +18,9 @@ object DatabaseSingleton {
                 (config.propertyOrNull("storage.dbFilePath")?.getString()?.let {
                     File(it).canonicalFile.absolutePath
                 } ?: "")
-        val database = Database.connect(createHikariDataSource(url = jdbcURL, driver = driverClassName))
+        val username = config.propertyOrNull("storage.username")?.getString()
+        val password = config.propertyOrNull("storage.password")?.getString()
+        val database = Database.connect(createHikariDataSource(url = jdbcURL, driver = driverClassName, username = username, password = password))
         transaction(database) {
             SchemaUtils.create(Users)
         }
@@ -26,11 +28,15 @@ object DatabaseSingleton {
 
     private fun createHikariDataSource(
         url: String,
-        driver: String
+        driver: String,
+        username: String?,
+        password: String?
     ) = HikariDataSource(HikariConfig().apply {
         driverClassName = driver
         jdbcUrl = url
         maximumPoolSize = 3
+        this.username = username
+        this.password = password
 //        isAutoCommit = false
 //        transactionIsolation = "TRANSACTION_REPEATABLE_READ"
         validate()

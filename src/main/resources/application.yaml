@@ -5,6 +5,7 @@ ktor:
     deployment:
         port: 8080
 storage:
-    driverClassName: "org.h2.Driver"
-    jdbcURL: "jdbc:h2:files:"
-    dbFilePath: build/db
+    driverClassName: "org.postgresql.Driver"
+    jdbcURL: "jdbc:postgresql://localhost:5432/hapkido"
+    username: hapkido
+    password: hapkido
