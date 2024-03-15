@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class UserRepository() : Repository<User, Long> {
-    private fun resultRowToUser(row: ResultRow) = User(
+    override fun toModel(row: ResultRow) = User(
         id = row[Users.id],
         username = row[Users.username],
         firstName = row[Users.firstName],
@@ -17,12 +17,12 @@ class UserRepository() : Repository<User, Long> {
     override suspend fun findByIdOrNull(id: Long) = dbQuery {
         Users.selectAll()
             .where(Users.id eq id)
-            .map(::resultRowToUser)
+            .map(this::toModel)
             .singleOrNull()
     }
 
     override suspend fun findAll() = dbQuery {
-        val users = Users.selectAll().map(::resultRowToUser)
+        val users = Users.selectAll().map(this::toModel)
         users
     }
 
@@ -46,6 +46,6 @@ class UserRepository() : Repository<User, Long> {
             it[firstName] = model.firstName
             it[lastName] = model.lastName
         }
-        insert.resultedValues?.singleOrNull()?.let(::resultRowToUser)
+        insert.resultedValues?.singleOrNull()?.let(this::toModel)
     }
 }
