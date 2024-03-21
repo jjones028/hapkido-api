@@ -1,6 +1,6 @@
 package io.spektacle
 
-import io.ktor.server.application.*
+import io.ktor.server.application.Application
 import io.spektacle.plugins.configureDatabases
 import io.spektacle.plugins.configureRouting
 import io.spektacle.plugins.configureSerialization

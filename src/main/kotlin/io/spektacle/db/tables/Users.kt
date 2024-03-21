@@ -3,6 +3,7 @@ package io.spektacle.db.tables
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.Table
 
+@Suppress("MagicNumber")
 object Users : Table() {
     val id: Column<Long> = long("id").autoIncrement()
     val username: Column<String> = varchar("username",50).uniqueIndex()
