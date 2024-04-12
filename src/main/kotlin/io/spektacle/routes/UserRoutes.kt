@@ -15,7 +15,7 @@ fun Routing.userRoutes() {
     //TODO: Introduce some sort of dependency injection here.
     val repository = UserRepository()
 
-    route("/user") {
+    route("/api/users") {
         get("/sample") {
             call.respond(listOf(
                 User(1, "jjones", "Jeremy", "Jones"),
@@ -31,7 +31,7 @@ fun Routing.userRoutes() {
             user?.let { call.respond(it) }
         }
         post {
-            repository.insert(call.receive<User>())
+            repository.create(call.receive<User>())
         }
     }
 }

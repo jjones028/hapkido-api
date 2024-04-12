@@ -10,7 +10,7 @@ interface Repository<T, ID> {
 
     suspend fun findAll() : Iterable<T>
 
-    suspend fun insert(model: T) : T?
+    suspend fun create(model: T) : T?
 
     suspend fun update(model: T) : Boolean
 
