@@ -15,7 +15,7 @@ fun Routing.subjectNameRoutes() {
     //TODO: Introduce some sort of dependency injection here.
     val repository = SubjectNameRepository()
 
-    route("/subjectname") {
+    route("/api/subjectnames") {
         get {
             call.respond(repository.findAll().toList())
         }
@@ -25,7 +25,7 @@ fun Routing.subjectNameRoutes() {
             subjectName?.let { call.respond(it) }
         }
         post {
-            repository.insert(call.receive<SubjectName>())
+            repository.create(call.receive<SubjectName>())
         }
     }
 }
