@@ -11,7 +11,6 @@ import io.spektacle.models.User
 import io.spektacle.repositories.UserRepository
 
 fun Routing.userRoutes(repository: UserRepository) {
-
     route("/api/users") {
         get("/sample") {
             call.respond(listOf(
@@ -28,7 +27,7 @@ fun Routing.userRoutes(repository: UserRepository) {
             user?.let { call.respond(it) }
         }
         post {
-            repository.insert(call.receive<User>())
+            repository.create(call.receive<User>())
         }
     }
 }

@@ -44,7 +44,7 @@ class UserRepository : Repository<User, Long> {
         Users.deleteWhere { Users.id eq id } == 1
     }
 
-    override suspend fun insert(model: User) = dbQuery {
+    override suspend fun create(model: User) = dbQuery {
         val insert = Users.insert {
             it[username] = model.username
             it[firstName] = model.firstName

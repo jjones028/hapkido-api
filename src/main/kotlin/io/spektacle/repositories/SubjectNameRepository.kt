@@ -45,7 +45,7 @@ class SubjectNameRepository : Repository<SubjectName, Long> {
         } ?: false
     }
 
-    override suspend fun insert(model: SubjectName) = dbQuery {
+    override suspend fun create(model: SubjectName) = dbQuery {
         val insert = SubjectNames.insert {
             it[commonName] = model.commonName
             it[countryCode] = model.countryCode

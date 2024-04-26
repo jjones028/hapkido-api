@@ -15,7 +15,6 @@ fun Routing.subjectNameRoutes(
     repository: SubjectNameRepository,
     keyPairService: KeyPairService
 ) {
-
     route("/api/subjectnames") {
         get {
             call.respond(repository.findAll().toList())
@@ -29,7 +28,7 @@ fun Routing.subjectNameRoutes(
             call.respond(keyPairService.generate())
         }
         post {
-            repository.insert(call.receive<SubjectName>())
+            repository.create(call.receive<SubjectName>())
         }
     }
 }
