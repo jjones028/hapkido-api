@@ -9,12 +9,12 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.spektacle.models.SubjectName
 import io.spektacle.repositories.SubjectNameRepository
+import io.spektacle.services.KeyPairService
 
-fun Routing.subjectNameRoutes() {
-
-    //TODO: Introduce some sort of dependency injection here.
-    val repository = SubjectNameRepository()
-
+fun Routing.subjectNameRoutes(
+    repository: SubjectNameRepository,
+    keyPairService: KeyPairService
+) {
     route("/api/subjectnames") {
         get {
             call.respond(repository.findAll().toList())
@@ -23,6 +23,9 @@ fun Routing.subjectNameRoutes() {
             val id = call.parameters["id"]?.toLong()
             val subjectName = id?.let { subjectNameId -> repository.findByIdOrNull(subjectNameId) }
             subjectName?.let { call.respond(it) }
+        }
+        get("/keypair") {
+            call.respond(keyPairService.generate())
         }
         post {
             repository.create(call.receive<SubjectName>())

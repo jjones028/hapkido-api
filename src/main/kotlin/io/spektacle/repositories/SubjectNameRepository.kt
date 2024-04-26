@@ -17,7 +17,7 @@ class SubjectNameRepository : Repository<SubjectName, Long> {
         countryCode = row[SubjectNames.countryCode],
         organization = row[SubjectNames.organization],
         organizationalUnit = row[SubjectNames.organizationalUnit],
-        statOrProvidence = row[SubjectNames.stateOrProvidence],
+        stateOrProvince = row[SubjectNames.stateOrProvidence],
         locality = row[SubjectNames.locality],
         emailAddress = row[SubjectNames.emailAddress]
     )
@@ -38,7 +38,7 @@ class SubjectNameRepository : Repository<SubjectName, Long> {
                 it[countryCode] = model.countryCode
                 it[organization] = model.organization
                 it[organizationalUnit] = model.organizationalUnit
-                it[stateOrProvidence] = model.statOrProvidence
+                it[stateOrProvidence] = model.stateOrProvince
                 it[locality] = model.locality
                 it[emailAddress] = model.emailAddress
             } == 1
@@ -51,7 +51,7 @@ class SubjectNameRepository : Repository<SubjectName, Long> {
             it[countryCode] = model.countryCode
             it[organization] = model.organization
             it[organizationalUnit] = model.organizationalUnit
-            it[stateOrProvidence] = model.statOrProvidence
+            it[stateOrProvidence] = model.stateOrProvince
             it[locality] = model.locality
             it[emailAddress] = model.emailAddress
         }
