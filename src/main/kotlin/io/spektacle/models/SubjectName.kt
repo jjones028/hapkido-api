@@ -8,7 +8,7 @@ data class SubjectName(
     val commonName: String,
     val countryCode: String,
     val organization: String,
-    val statOrProvidence: String? = null,
+    val stateOrProvince: String? = null,
     val locality: String? = null,
     val organizationalUnit: String? = null,
     val emailAddress: String? = null

@@ -10,12 +10,9 @@ import io.ktor.server.routing.route
 import io.spektacle.models.User
 import io.spektacle.repositories.UserRepository
 
-fun Routing.userRoutes() {
+fun Routing.userRoutes(repository: UserRepository) {
 
-    //TODO: Introduce some sort of dependency injection here.
-    val repository = UserRepository()
-
-    route("/user") {
+    route("/api/users") {
         get("/sample") {
             call.respond(listOf(
                 User(1, "jjones", "Jeremy", "Jones"),
