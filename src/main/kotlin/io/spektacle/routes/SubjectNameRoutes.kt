@@ -1,6 +1,7 @@
 package io.spektacle.routes
 
 import io.ktor.server.application.call
+import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
@@ -15,20 +16,25 @@ fun Routing.subjectNameRoutes(
     repository: SubjectNameRepository,
     keyPairService: KeyPairService
 ) {
-    route("/api/subjectnames") {
-        get {
-            call.respond(repository.findAll().toList())
+//        authenticate("auth-jwt") {
+            authenticate("azure-entra-oauth") {
+                route("/api/subjectnames") {
+                    get {
+                        call.respond(repository.findAll().toList())
+                    }
+                    get("/{id}") {
+                        val id = call.parameters["id"]?.toLong()
+                        val subjectName = id?.let { subjectNameId -> repository.findByIdOrNull(subjectNameId) }
+                        subjectName?.let { call.respond(it) }
+                    }
+                    get("/keypair") {
+                        call.respond(keyPairService.generate())
+                    }
+                    post {
+                        repository.create(call.receive<SubjectName>())
+
+                    }
+                }
+            }
         }
-        get("/{id}") {
-            val id = call.parameters["id"]?.toLong()
-            val subjectName = id?.let { subjectNameId -> repository.findByIdOrNull(subjectNameId) }
-            subjectName?.let { call.respond(it) }
-        }
-        get("/keypair") {
-            call.respond(keyPairService.generate())
-        }
-        post {
-            repository.create(call.receive<SubjectName>())
-        }
-    }
-}
+//    }
