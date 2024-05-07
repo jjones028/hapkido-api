@@ -16,25 +16,22 @@ fun Routing.subjectNameRoutes(
     repository: SubjectNameRepository,
     keyPairService: KeyPairService
 ) {
-//        authenticate("auth-jwt") {
-            authenticate("azure-entra-oauth") {
-                route("/api/subjectnames") {
-                    get {
-                        call.respond(repository.findAll().toList())
-                    }
-                    get("/{id}") {
-                        val id = call.parameters["id"]?.toLong()
-                        val subjectName = id?.let { subjectNameId -> repository.findByIdOrNull(subjectNameId) }
-                        subjectName?.let { call.respond(it) }
-                    }
-                    get("/keypair") {
-                        call.respond(keyPairService.generate())
-                    }
-                    post {
-                        repository.create(call.receive<SubjectName>())
-
-                    }
-                }
+    authenticate("auth-jwt", "azure-entra-oauth") {
+        route("/api/subjectnames") {
+            get {
+                call.respond(repository.findAll().toList())
+            }
+            get("/{id}") {
+                val id = call.parameters["id"]?.toLong()
+                val subjectName = id?.let { subjectNameId -> repository.findByIdOrNull(subjectNameId) }
+                subjectName?.let { call.respond(it) }
+            }
+            get("/keypair") {
+                call.respond(keyPairService.generate())
+            }
+            post {
+                repository.create(call.receive<SubjectName>())
             }
         }
-//    }
+    }
+}

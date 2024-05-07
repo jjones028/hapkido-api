@@ -15,6 +15,7 @@ import io.ktor.server.response.respond
 import io.spektacle.plugins.configureDatabases
 import io.spektacle.plugins.configureRouting
 import io.spektacle.plugins.configureSerialization
+import java.net.URL
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
@@ -27,13 +28,15 @@ fun Application.module() {
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "azure-oauth",
-                    authorizeUrl = "https://login.microsoftonline.com/366dec87-056c-4e1e-b07d-3418246c9071/oauth2/v2.0/authorize",
-                    accessTokenUrl = "https://login.microsoftonline.com/366dec87-056c-4e1e-b07d-3418246c9071/oauth2/v2.0/token",
+                    authorizeUrl =
+                    "https://login.microsoftonline.com/366dec87-056c-4e1e-b07d-3418246c9071/oauth2/v2.0/authorize",
+                    accessTokenUrl =
+                    "https://login.microsoftonline.com/366dec87-056c-4e1e-b07d-3418246c9071/oauth2/v2.0/token",
                     clientId = "aba1e669-3317-4d67-8936-db4e74bcd865",
                     clientSecret = "",
                     accessTokenRequiresBasicAuth = false,
                     requestMethod = HttpMethod.Post,
-                    defaultScopes = listOf("api://aba1e669-3317-4d67-8936-db4e74bcd865/access_via_approle_assignments"),
+                    defaultScopes = listOf("api://aba1e669-3317-4d67-8936-db4e74bcd865/access_via_approle_assignments")
                 )
             }
             urlProvider = {
@@ -41,17 +44,15 @@ fun Application.module() {
             }
         }
         jwt("auth-jwt") {
-            val TENANT_ID = "366dec87-056c-4e1e-b07d-3418246c9071"
-            val CLIENT_ID = "aba1e669-3317-4d67-8936-db4e74bcd865"
-            val JWKS_URI = "https://login.microsoftonline.com/$TENANT_ID/discovery/v2.0/keys"
-            val JWT_ISSUER_URI = "https://login.microsoftonline.com/$TENANT_ID/v2.0"
+            val tenantId = "366dec87-056c-4e1e-b07d-3418246c9071"
+            val clientId = "aba1e669-3317-4d67-8936-db4e74bcd865"
+            val jwksUri = "https://login.microsoftonline.com/$tenantId/discovery/v2.0/keys"
+            val jwtIssuerUri = "https://login.microsoftonline.com/$tenantId/v2.0"
 
-            val jwkProvider = JwkProviderBuilder(JWKS_URI).build()
-            realm = ""
-            verifier(jwkProvider, JWT_ISSUER_URI) {
-                withIssuer(JWT_ISSUER_URI)
-                withAudience(CLIENT_ID)
-                acceptLeeway(10)
+            val jwkProvider = JwkProviderBuilder(URL(jwksUri)).build()
+            verifier(jwkProvider, jwtIssuerUri) {
+                withIssuer(jwtIssuerUri)
+                withAudience(clientId)
             }
             validate { jwtCredential ->
                 if (jwtCredential.payload.issuer != null) {
@@ -60,7 +61,7 @@ fun Application.module() {
                     null
                 }
             }
-            challenge { defaultScheme, realm ->
+            challenge { _, _ ->
                 call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
             }
         }
