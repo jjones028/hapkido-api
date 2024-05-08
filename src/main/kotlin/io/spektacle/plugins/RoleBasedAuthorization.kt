@@ -30,12 +30,12 @@ val RoleBasedAuthorizationPlugin = createRouteScopedPlugin(
     }
 }
 
-private fun getRolesFromToken(call: ApplicationCall): List<String> {
+private fun getRolesFromToken(call: ApplicationCall): Set<String> {
     return call.principal<JWTPrincipal>()
         ?.payload
         ?.getClaim("roles")
         ?.asList(String::class.java)
-        ?.toList() ?: emptyList()
+        ?.toSet() ?: emptySet()
 }
 
 class PluginConfiguration {
