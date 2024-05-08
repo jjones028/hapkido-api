@@ -17,7 +17,7 @@ fun Routing.subjectNameRoutes(
     repository: SubjectNameRepository,
     keyPairService: KeyPairService
 ) {
-    authenticate("auth-jwt", "azure-entra-oauth") {
+    authenticate("auth-jwt") {
         authorized("SubjectNames.Manage.All") {
             route("/api/subjectnames") {
                 get {
