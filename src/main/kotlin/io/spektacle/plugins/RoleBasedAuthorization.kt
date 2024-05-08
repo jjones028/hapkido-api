@@ -10,10 +10,6 @@ import io.ktor.server.auth.principal
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 
-class PluginConfiguration {
-    var roles: Set<String> = emptySet()
-}
-
 val RoleBasedAuthorizationPlugin = createRouteScopedPlugin(
     name = "RoleBasedAuthorization",
     createConfiguration = ::PluginConfiguration
@@ -42,7 +38,12 @@ private fun getRolesFromToken(call: ApplicationCall): List<String> {
         ?.toList() ?: emptyList()
 }
 
+class PluginConfiguration {
+    var roles: Set<String> = emptySet()
+}
+
 fun Route.authorized(vararg hasAnyRole: String, build: Route.() -> Unit) {
     install(RoleBasedAuthorizationPlugin) { roles = hasAnyRole.toSet() }
     build()
 }
+
