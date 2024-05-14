@@ -11,11 +11,9 @@ import io.ktor.server.routing.route
 import io.spektacle.models.SubjectName
 import io.spektacle.plugins.authorized
 import io.spektacle.repositories.SubjectNameRepository
-import io.spektacle.services.KeyPairService
 
 fun Routing.subjectNameRoutes(
-    repository: SubjectNameRepository,
-    keyPairService: KeyPairService
+    repository: SubjectNameRepository
 ) {
     authenticate("auth-jwt") {
         authorized("SubjectNames.Manage.All") {
@@ -27,9 +25,6 @@ fun Routing.subjectNameRoutes(
                     val id = call.parameters["id"]?.toLong()
                     val subjectName = id?.let { subjectNameId -> repository.findByIdOrNull(subjectNameId) }
                     subjectName?.let { call.respond(it) }
-                }
-                get("/keypair") {
-                    call.respond(keyPairService.generate())
                 }
                 post {
                     repository.create(call.receive<SubjectName>())

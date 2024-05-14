@@ -3,6 +3,7 @@ package io.spektacle.db
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.config.ApplicationConfig
+import io.spektacle.db.tables.KeyPairs
 import io.spektacle.db.tables.SubjectNames
 import io.spektacle.db.tables.Users
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,7 @@ object DatabaseSingleton {
         transaction(database) {
             SchemaUtils.create(Users)
             SchemaUtils.create(SubjectNames)
+            SchemaUtils.create(KeyPairs)
         }
     }
 
