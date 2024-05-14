@@ -2,6 +2,7 @@ package io.spektacle.services
 
 import io.spektacle.models.KeyPair
 import io.spektacle.process.ProcessExecutor
+import io.spektacle.repositories.KeyPairRepository
 import java.util.*
 import kotlin.io.path.Path
 import kotlin.io.path.absolutePathString
@@ -10,7 +11,7 @@ import kotlin.io.path.deleteIfExists
 import kotlin.io.path.readText
 
 
-class OpenSSLKeyPairService : KeyPairService {
+class OpenSSLKeyPairService(private val repository: KeyPairRepository) : KeyPairService {
     override suspend fun generate(): KeyPair {
 
         val (privateKey, privateKeyFilename) = generatePrivateKey()
@@ -21,6 +22,21 @@ class OpenSSLKeyPairService : KeyPairService {
 
         return KeyPair(privateKey, publicKey)
     }
+
+    override suspend fun create(keyPair: KeyPair) =
+        repository.create(keyPair)
+
+    override suspend fun delete(id: Long) =
+        repository.delete(id)
+
+    override suspend fun update(keyPair: KeyPair) =
+        repository.update(keyPair)
+
+    override suspend fun findByIdOrNull(id: Long) =
+        repository.findByIdOrNull(id)
+
+    override suspend fun findAll() =
+        repository.findAll()
 
     private suspend fun generatePrivateKey(): Pair<String, String> {
         val privateKeyTempFile = createTempFile(UUID.randomUUID().toString())
