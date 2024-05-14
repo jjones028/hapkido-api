@@ -13,14 +13,11 @@ class ProcessExecutor(private val command: List<String>) {
         runCatching {
             val process = ProcessBuilder(command).start()
             val outputStream = async {
-                println("Context for output stream -> $coroutineContext -> Thread -> ${Thread.currentThread()}")
                 readStream(process.inputStream)
             }
             val errorStream = async {
-                println("Context for error stream -> $coroutineContext -> Thread -> ${Thread.currentThread()}")
                 readStream(process.errorStream)
             }
-            println("Context for exit code -> $coroutineContext -> Thread -> ${Thread.currentThread()}")
             val exitCode = process.waitFor()
             ProcessResult(
                 exitCode = exitCode,
