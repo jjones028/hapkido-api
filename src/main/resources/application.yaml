@@ -4,6 +4,7 @@ ktor:
             - io.spektacle.ApplicationKt.module
     deployment:
         port: 8080
+        host: localhost
 storage:
     driverClassName: "org.postgresql.Driver"
     jdbcURL: "jdbc:postgresql://localhost:5432/hapkido"
