@@ -1,0 +1,263 @@
+openapi: "3.0.41"
+info:
+  title: "hapkido API"
+  description: "hapkido API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /api/keypairs:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/KeyPair"
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/KeyPair"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/KeyPair"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    put:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/KeyPair"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+  /api/keypairs/{id}:
+    delete:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "integer"
+              format: "int64"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "boolean"
+    get:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/KeyPair"
+  /api/keypairs/generate:
+    post:
+      description: ""
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/KeyPair"
+  /api/subjectnames:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/SubjectName"
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubjectName"
+        required: true
+  /api/subjectnames/{id}:
+    get:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubjectName"
+        "204":
+          description: "No Content"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/EmptyContent"
+  /api/users:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+  /api/users/{id}:
+    get:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/User"
+  /api/users/sample:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/User"
+              examples:
+                Example#1:
+                  description: ""
+                  value:
+                    - id: 1
+                      username: "jjones"
+                      firstName: "Jeremy"
+                      lastName: "Jones"
+                    - id: 2
+                      username: "theprince"
+                      firstName: "The artist formally known as Prince"
+                      lastName: null
+components:
+  schemas:
+    KeyPair:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        privateKey:
+          type: "string"
+        publicKey:
+          type: "string"
+      required:
+        - "privateKey"
+        - "publicKey"
+    SubjectName:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        commonName:
+          type: "string"
+        countryCode:
+          type: "string"
+        organization:
+          type: "string"
+        stateOrProvince:
+          type: "string"
+        locality:
+          type: "string"
+        organizationalUnit:
+          type: "string"
+        emailAddress:
+          type: "string"
+      required:
+        - "commonName"
+        - "countryCode"
+        - "organization"
+    EmptyContent:
+      type: "object"
+      properties: { }
+    User:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        username:
+          type: "string"
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+      required:
+        - "username"
+        - "firstName"

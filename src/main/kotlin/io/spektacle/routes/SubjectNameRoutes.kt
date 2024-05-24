@@ -1,5 +1,7 @@
 package io.spektacle.routes
 
+import io.ktor.client.utils.EmptyContent
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
@@ -24,7 +26,7 @@ fun Routing.subjectNameRoutes(
                 get("/{id}") {
                     val id = call.parameters["id"]?.toLong()
                     val subjectName = id?.let { subjectNameId -> repository.findByIdOrNull(subjectNameId) }
-                    subjectName?.let { call.respond(it) }
+                    subjectName?.let { call.respond(it) } ?: call.respond(HttpStatusCode.NoContent, EmptyContent)
                 }
                 post {
                     repository.create(call.receive<SubjectName>())
