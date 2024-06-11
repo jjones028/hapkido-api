@@ -16,8 +16,8 @@ fun Application.configureRouting() {
     routing {
         swaggerUI(path = "swagger")
         openAPI(path = "openapi")
-        userRoutes(UserRepository())
-        subjectNameRoutes(SubjectNameRepository())
-        keyPairRoutes(OpenSSLKeyPairService(KeyPairRepository()))
+        userRoutes(repository = UserRepository())
+        subjectNameRoutes(repository = SubjectNameRepository())
+        keyPairRoutes(service = OpenSSLKeyPairService(repository = KeyPairRepository()))
     }
 }

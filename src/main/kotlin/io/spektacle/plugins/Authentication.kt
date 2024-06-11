@@ -5,10 +5,12 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
+import io.ktor.server.auth.jwt.JWTCredential
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.jwt.jwt
 import io.ktor.server.response.respond
 import java.net.URL
+import java.util.*
 
 fun Application.configureAuthentication() {
     install(Authentication) {
@@ -24,11 +26,7 @@ fun Application.configureAuthentication() {
                 withAudience(clientId)
             }
             validate { jwtCredential ->
-                if (jwtCredential.payload.issuer != null) {
-                    JWTPrincipal(jwtCredential.payload)
-                } else {
-                    null
-                }
+                validateCredentials(jwtCredential)
             }
             challenge { _, _ ->
                 call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
@@ -36,3 +34,8 @@ fun Application.configureAuthentication() {
         }
     }
 }
+
+private fun validateCredentials(jwtCredential: JWTCredential) =
+    if (jwtCredential.payload.issuer != null || jwtCredential.expiresAt?.after(Date()) == true)
+        JWTPrincipal(jwtCredential.payload)
+    else null
