@@ -35,9 +35,10 @@ fun Routing.keyPairRoutes(
                     } ?: call.respond(HttpStatusCode.NotFound)
                 }
                 post("/generate") {
-                    val keyPair = service.generate()
-                    service.create(keyPair)
-                    call.respond(HttpStatusCode.Created, keyPair)
+                    call.respond(
+                        HttpStatusCode.Created, service.create(service.generate())
+                            ?: throw RuntimeException("Could not create key pair")
+                    )
                 }
                 put {
                     call.respond(HttpStatusCode.OK, service.update(call.receive<KeyPair>()))
