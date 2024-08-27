@@ -4,7 +4,7 @@ info:
   description: "hapkido API"
   version: "1.0.0"
 servers:
-  - url: "http://localhost:8080"
+- url: "http://localhost:8080"
 paths:
   /api/keypairs:
     get:
@@ -58,11 +58,11 @@ paths:
     delete:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       requestBody:
         content:
           application/json:
@@ -80,11 +80,11 @@ paths:
     get:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "number"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "number"
       responses:
         "200":
           description: "OK"
@@ -126,11 +126,11 @@ paths:
     get:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "number"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "number"
       responses:
         "200":
           description: "OK"
@@ -168,11 +168,11 @@ paths:
     get:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "number"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "number"
       responses:
         "200":
           description: "OK"
@@ -196,14 +196,14 @@ paths:
                 Example#1:
                   description: ""
                   value:
-                    - id: 1
-                      username: "jjones"
-                      firstName: "Jeremy"
-                      lastName: "Jones"
-                    - id: 2
-                      username: "theprince"
-                      firstName: "The artist formally known as Prince"
-                      lastName: null
+                  - id: 1
+                    username: "jjones"
+                    firstName: "Jeremy"
+                    lastName: "Jones"
+                  - id: 2
+                    username: "theprince"
+                    firstName: "The artist formally known as Prince"
+                    lastName: "null"
 components:
   schemas:
     KeyPair:
@@ -217,8 +217,8 @@ components:
         publicKey:
           type: "string"
       required:
-        - "privateKey"
-        - "publicKey"
+      - "privateKey"
+      - "publicKey"
     SubjectName:
       type: "object"
       properties:
@@ -240,12 +240,12 @@ components:
         emailAddress:
           type: "string"
       required:
-        - "commonName"
-        - "countryCode"
-        - "organization"
+      - "commonName"
+      - "countryCode"
+      - "organization"
     EmptyContent:
       type: "object"
-      properties: { }
+      properties: {}
     User:
       type: "object"
       properties:
@@ -259,5 +259,5 @@ components:
         lastName:
           type: "string"
       required:
-        - "username"
-        - "firstName"
+      - "username"
+      - "firstName"
