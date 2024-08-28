@@ -1,1 +1,1 @@
-rootProject.name = "hapkido"
+rootProject.name = "hapkido-api"
