@@ -2,6 +2,8 @@ package io.spektacle.repositories
 
 import io.spektacle.db.DatabaseSingleton.dbQuery
 import io.spektacle.db.tables.SubjectNames
+import io.spektacle.models.ExistingSubjectName
+import io.spektacle.models.NewSubjectName
 import io.spektacle.models.SubjectName
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -10,7 +12,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
 
-class SubjectNameRepository : Repository<SubjectName, Long> {
+class SubjectNameRepository : Repository<ExistingSubjectName, NewSubjectName, Long> {
     override fun toModel(row: ResultRow) = SubjectName(
         id = row[SubjectNames.id],
         commonName = row[SubjectNames.commonName],
@@ -30,22 +32,20 @@ class SubjectNameRepository : Repository<SubjectName, Long> {
         SubjectNames.deleteWhere { SubjectNames.id eq id } == 1
     }
 
-    override suspend fun update(model: SubjectName) = dbQuery {
-        model.id?.let {
-            SubjectNames.update {
-                it[id] = model.id
-                it[commonName] = model.commonName
-                it[countryCode] = model.countryCode
-                it[organization] = model.organization
-                it[organizationalUnit] = model.organizationalUnit
-                it[stateOrProvince] = model.stateOrProvince
-                it[locality] = model.locality
-                it[emailAddress] = model.emailAddress
-            } == 1
-        } ?: false
+    override suspend fun update(model: ExistingSubjectName) = dbQuery {
+        SubjectNames.update {
+            it[id] = model.id
+            it[commonName] = model.commonName
+            it[countryCode] = model.countryCode
+            it[organization] = model.organization
+            it[organizationalUnit] = model.organizationalUnit
+            it[stateOrProvince] = model.stateOrProvince
+            it[locality] = model.locality
+            it[emailAddress] = model.emailAddress
+        } == 1
     }
 
-    override suspend fun create(model: SubjectName) = dbQuery {
+    override suspend fun create(model: NewSubjectName) = dbQuery {
         val insert = SubjectNames.insert {
             it[commonName] = model.commonName
             it[countryCode] = model.countryCode

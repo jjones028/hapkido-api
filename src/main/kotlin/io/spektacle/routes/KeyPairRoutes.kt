@@ -30,7 +30,7 @@ fun Routing.keyPairRoutes(
                     keyPair?.let { call.respond(HttpStatusCode.OK, it) }
                 }
                 post {
-                    service.create(call.receive<KeyPair>())?.let {
+                    service.create(call.receive<KeyPair<Nothing?>>())?.let {
                         call.respond(HttpStatusCode.Created, it)
                     } ?: call.respond(HttpStatusCode.NotFound)
                 }
@@ -41,7 +41,7 @@ fun Routing.keyPairRoutes(
                     )
                 }
                 put {
-                    call.respond(HttpStatusCode.OK, service.update(call.receive<KeyPair>()))
+                    call.respond(HttpStatusCode.OK, service.update(call.receive<KeyPair<Long>>()))
                 }
                 delete("/{id}") {
                     call.respond(HttpStatusCode.OK, service.delete(call.receive<Long>()))

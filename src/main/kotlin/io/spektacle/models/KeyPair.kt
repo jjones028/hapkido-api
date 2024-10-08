@@ -3,14 +3,10 @@ package io.spektacle.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class KeyPair(
-    val id: Long? = null,
+data class KeyPair<ID: Long?>(
+    val id: ID,
     val privateKey: String,
     val publicKey: String
-) {
-    constructor(privateKey: String, publicKey: String) : this(
-        null,
-        privateKey,
-        publicKey
-    )
-}
+)
+typealias ExistingKeyPair = KeyPair<Long>
+typealias NewKeyPair = KeyPair<Nothing?>

@@ -10,6 +10,7 @@ import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
+import io.spektacle.models.NewSubjectName
 import io.spektacle.models.SubjectName
 import io.spektacle.plugins.authorized
 import io.spektacle.repositories.SubjectNameRepository
@@ -29,7 +30,7 @@ fun Routing.subjectNameRoutes(
                     subjectName?.let { call.respond(it) } ?: call.respond(HttpStatusCode.NoContent, EmptyContent)
                 }
                 post {
-                    repository.create(call.receive<SubjectName>())
+                    repository.create(call.receive<NewSubjectName>())
                 }
             }
         }

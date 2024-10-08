@@ -7,6 +7,7 @@ import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
+import io.spektacle.models.NewUser
 import io.spektacle.models.User
 import io.spektacle.repositories.UserRepository
 
@@ -27,7 +28,7 @@ fun Routing.userRoutes(repository: UserRepository) {
             user?.let { call.respond(it) }
         }
         post {
-            repository.create(call.receive<User>())
+            repository.create(call.receive<NewUser>())
         }
     }
 }

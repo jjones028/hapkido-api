@@ -2,6 +2,8 @@ package io.spektacle.repositories
 
 import io.spektacle.db.DatabaseSingleton.dbQuery
 import io.spektacle.db.tables.Users
+import io.spektacle.models.ExistingUser
+import io.spektacle.models.NewUser
 import io.spektacle.models.User
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -10,7 +12,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
 
-class UserRepository : Repository<User, Long> {
+class UserRepository : Repository<ExistingUser, NewUser, Long> {
     override fun toModel(row: ResultRow) = User(
         id = row[Users.id],
         username = row[Users.username],
@@ -29,22 +31,20 @@ class UserRepository : Repository<User, Long> {
         Users.selectAll().map(::toModel)
     }
 
-    override suspend fun update(model: User) = dbQuery {
-        model.id?.let {
-            Users.update {
+    override suspend fun update(model: ExistingUser) = dbQuery {
+        Users.update {
             it[id] = model.id
             it[username] = model.username
             it[firstName] = model.firstName
             it[lastName] = model.lastName
-            } == 1
-        } ?: false
+        } == 1
     }
 
     override suspend fun delete(id: Long) = dbQuery {
         Users.deleteWhere { Users.id eq id } == 1
     }
 
-    override suspend fun create(model: User) = dbQuery {
+    override suspend fun create(model: NewUser) = dbQuery {
         val insert = Users.insert {
             it[username] = model.username
             it[firstName] = model.firstName

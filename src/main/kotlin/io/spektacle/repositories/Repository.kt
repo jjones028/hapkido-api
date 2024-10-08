@@ -2,7 +2,7 @@ package io.spektacle.repositories
 
 import org.jetbrains.exposed.sql.ResultRow
 
-interface Repository<T, ID> {
+interface Repository<T, RT, ID> {
 
     fun toModel(row: ResultRow) : T
 
@@ -10,7 +10,7 @@ interface Repository<T, ID> {
 
     suspend fun findAll() : Iterable<T>
 
-    suspend fun create(model: T) : T?
+    suspend fun create(model: RT) : T?
 
     suspend fun update(model: T) : Boolean
 

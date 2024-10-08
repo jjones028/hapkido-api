@@ -3,8 +3,8 @@ package io.spektacle.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SubjectName(
-    val id: Long? = null,
+data class SubjectName<ID: Long?>(
+    val id: ID,
     val commonName: String,
     val countryCode: String,
     val organization: String,
@@ -13,3 +13,6 @@ data class SubjectName(
     val organizationalUnit: String? = null,
     val emailAddress: String? = null
 )
+
+typealias ExistingSubjectName = SubjectName<Long>
+typealias NewSubjectName = SubjectName<Nothing?>

@@ -9,7 +9,7 @@ import io.ktor.server.auth.jwt.JWTCredential
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.jwt.jwt
 import io.ktor.server.response.respond
-import java.net.URL
+import java.net.URI
 import java.util.*
 
 fun Application.configureAuthentication() {
@@ -20,7 +20,7 @@ fun Application.configureAuthentication() {
             val jwksUri = "https://login.microsoftonline.com/$tenantId/discovery/v2.0/keys"
             val jwtIssuerUri = "https://login.microsoftonline.com/$tenantId/v2.0"
 
-            val jwkProvider = JwkProviderBuilder(URL(jwksUri)).build()
+            val jwkProvider = JwkProviderBuilder(URI(jwksUri).toURL()).build()
             verifier(jwkProvider, jwtIssuerUri) {
                 withIssuer(jwtIssuerUri)
                 withAudience(clientId)
