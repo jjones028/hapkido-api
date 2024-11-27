@@ -2,6 +2,6 @@ services:
   api:
     image: mcr.microsoft.com/devcontainers/java:21
     volumes:
-      - .:/workspace:cached
+      - ../:/workspace:cached
     command: sleep infinity
     network_mode: service:postgres

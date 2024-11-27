@@ -5,6 +5,5 @@
     "service": "api",
     "runServices": ["postgres"],
     "shutdownAction": "stopCompose",
-    "workspaceFolder": "/workspace"
-    
+    "workspaceFolder": "/workspace"   
 }
