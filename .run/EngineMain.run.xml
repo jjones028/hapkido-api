@@ -14,7 +14,7 @@
     <option name="workingDirectory" value="C:\Users\jeremy.jones\Projects\hapkido\api" />
     <method v="2">
       <option name="Make" enabled="true" />
-      <option name="RunConfigurationTask" enabled="true" run_configuration_name="hapkido-db" run_configuration_type="docker-deploy" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="hapkido-database" run_configuration_type="docker-deploy" />
     </method>
   </configuration>
 </component>
