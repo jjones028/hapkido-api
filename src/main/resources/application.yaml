@@ -6,6 +6,6 @@ ktor:
         port: 8080
 storage:
     driverClassName: "org.postgresql.Driver"
-    jdbcURL: "jdbc:postgresql://postgres:5432/hapkido"
+    jdbcURL: "jdbc:postgresql://hapkido-database:5432/hapkido"
     username: hapkido
     password: hapkido

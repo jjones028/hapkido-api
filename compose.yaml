@@ -1,5 +1,6 @@
 services:
   app:
+    container_name: hapkido-api
     image: eclipse-temurin:21-jdk-alpine
     networks:
       - hapkido
@@ -7,6 +8,7 @@ services:
       - "8080:8080"
 
   postgres:
+    container_name: hapkido-database
     image: postgres
     environment:
       POSTGRES_USER: hapkido
