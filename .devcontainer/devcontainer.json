@@ -1,10 +1,9 @@
 {
     "name": "Hapkido API",
-    "dockerComposeFile": ["../compose.yml","compose.devcontainer.yml"],
+    "dockerComposeFile": ["../compose.yaml", "compose.devcontainer.yaml"],
     "forwardPorts": [8080],
     "service": "api",
     "runServices": ["postgres"],
     "shutdownAction": "stopCompose",
-    "workspaceFolder": "/workspace"
-    
+    "workspaceFolder": "/workspace"   
 }

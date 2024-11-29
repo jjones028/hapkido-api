@@ -1,0 +1,26 @@
+services:
+  app:
+    image: eclipse-temurin:21-jdk-alpine
+    networks:
+      - hapkido
+    ports:
+      - "8080:8080"
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: hapkido
+      POSTGRES_PASSWORD: hapkido
+      POSTGRES_DB: hapkido
+    networks:
+      - hapkido
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+networks:
+  hapkido:
+
+volumes:
+  pgdata:
